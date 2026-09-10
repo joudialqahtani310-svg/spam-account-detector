@@ -3,19 +3,17 @@ import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
-import re
 
 st.set_page_config(page_title="Spam & Bot Account Detector", page_icon="🤖", layout="wide")
 
 @st.cache_resource
 def train_and_get_model():
-    # بيانات تدريب سريعة ومختصرة لضمان عمل التطبيق مباشرة
     data = {
         'text': [
             "Free follower boost click here now!", "Win cash prize instantly", "Follow back for back",
-            "اشتري المتابعين واللايكات بأرخص الأسعار", "ربح سريع اضغط الرابط", "فرصة ذهبية استثمر الآن",
+            "Get rich quick with crypto investments", "Buy followers cheap price", "Click link to claim free money",
             "Good morning everyone", "Deep learning is fascinating", "Just shared a new blog post",
-            "صباح الخير جميعاً", "مشروع الذكاء الاصطناعي مكتمل بنجاح", "دراسة جديدة عن تحليل البيانات"
+            "Working on my graduation project today", "Great weather outside", "Data science and machine learning"
         ],
         'is_bot': [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
     }
@@ -28,21 +26,21 @@ def train_and_get_model():
 
 model, vectorizer = train_and_get_model()
 
-st.title("🤖 Spam & Bot Account Detector")
-st.write("أدخل النص أو تفاصيل الحساب للتحقق مما إذا كان حقيقياً أم حساماً وهمياً/سبام.")
+st.title("🤖 Multilingual Spam & Bot Account Detector")
+st.write("Analyze text content or bio description to detect automated bot accounts and spam messages.")
 
-user_text = st.text_area("أدخل نص التغريدة أو وصف الحساب (Bio):", "")
+user_text = st.text_area("Enter Tweet text or Account Bio to inspect:", "")
 
-if st.button("فحص الآن"):
+if st.button("Detect Spam / Bot"):
     if user_text.strip() == "":
-        st.warning("الرجاء إدخال نص للفحص.")
+        st.warning("Please enter text to analyze.")
     else:
         text_vector = vectorizer.transform([user_text])
         prediction = model.predict(text_vector)[0]
         proba = model.predict_proba(text_vector)[0][1]
         
-        st.subheader("نتيجة الفحص:")
+        st.subheader("Analysis Results:")
         if prediction == 1 or proba > 0.5:
-            st.error(f"🚨 تنبيه: هذا الحساب/النص صُنف كـ **بوت / سبام** (نسبة الشك: {proba*100:.1f}%)")
+            st.error(f"🚨 Warning: This account/text is flagged as **Bot / Spam** (Risk Score: {proba*100:.1f}%)")
         else:
-            st.success(f"✅ هذا الحساب/النص يبدو **حقيقياً** (نسبة الشك: {proba*100:.1f}%)")
+            st.success(f"✅ Safe: This account/text appears to be **Authentic** (Risk Score: {proba*100:.1f}%)")
