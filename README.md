@@ -6,7 +6,7 @@ An AI-powered web application that detects automated bot accounts and spam conte
 
 ## 🚀 Live Demo & Web Application
 You can interact with the live trained model directly on the web:
-👉 **[Click Here to Launch Live Web App]((https://spam-account-detector-a4qdfrehiplf2dkm3hngfo.streamlit.app/))**
+👉 **[Click Here to Launch Live Web App](https://spam-account-detector-a4qdfrehiplf2dkm3hngfo.streamlit.app/)**
 
 ---
 
